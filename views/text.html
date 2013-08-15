@@ -12,7 +12,7 @@
 #}
 <title>#{post.title}</title>
 <style>
-.content {
+article {
   outline: none;
 }
 
@@ -22,7 +22,7 @@
 #main.editing .edit {
   display: block;
 }
-#main.editing .content {
+#main.editing article {
   display: none;
 }
 
@@ -98,11 +98,11 @@ pre {
 <body>
   <div id='main'>
   <div class='badge'><a href='/{# if model then print "admin" #}'>¤</a></div>
-  <div class='content'>
-    <h1 class='title'>#{post.title}</h1>
-    <div class='body'>{# print md post.body #}</div>
+  <article class='h-entry'>
+    <h1 class='p-name'>#{post.title}</h1>
+    <div class='e-content'>{# print md post.body #}</div>
     <div class='footer'>Joseph Gentle, #{new Date(post.created_at).toDateString()}</div>
-  </div>
+  </article>
 {#
   if model {:
   <div class='edit'>
@@ -272,9 +272,9 @@ function makeExpandingArea(area) {
     if (!editing) return;
     editing = false;
     editScroll = window.scrollY;
-    document.querySelector('.body').innerHTML =
+    document.querySelector('e-content').innerHTML =
         marked(document.getElementById('edit-text').value);
-    document.querySelector('.title').innerHTML =
+    document.querySelector('p-name').innerHTML =
         document.getElementById('edit-title').value;
     var main = document.querySelector('#main')
     main.classList.remove('editing')
