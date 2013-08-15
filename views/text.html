@@ -101,7 +101,7 @@ pre {
   <article class='h-entry'>
     <h1 class='p-name'>#{post.title}</h1>
     <div class='e-content'>{# print md post.body #}</div>
-    <div class='footer'>Joseph Gentle, #{new Date(post.created_at).toDateString()}</div>
+    <div class='footer'><span class='p-author h-card'>Joseph Gentle</span>, #{new Date(post.created_at).toDateString()}</div>
   </article>
 {#
   if model {:
