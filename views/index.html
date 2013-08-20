@@ -49,7 +49,7 @@ pre {
   {#
     for post in posts {:
       <article class='h-entry'>
-        <h1 class='p-name'><a class="u-url" href=#{post.slug}>#{post.title}</a></h1>
+        <h1 class='p-name'><a class="u-url" href="blog/#{post.slug}">#{post.title}</a></h1>
         <div class='e-content'>{# print md post.body #}</div>
       </article>
     :}
