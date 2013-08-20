@@ -272,9 +272,9 @@ function makeExpandingArea(area) {
     if (!editing) return;
     editing = false;
     editScroll = window.scrollY;
-    document.querySelector('e-content').innerHTML =
+    document.querySelector('.e-content').innerHTML =
         marked(document.getElementById('edit-text').value);
-    document.querySelector('p-name').innerHTML =
+    document.querySelector('.p-name').innerHTML =
         document.getElementById('edit-title').value;
     var main = document.querySelector('#main')
     main.classList.remove('editing')
