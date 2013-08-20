@@ -220,9 +220,19 @@ app.get '/', (req, res) ->
     res.render 'index', md: marked, posts: posts
 
 app.get '/:slug', (req, res, next) ->
+  db.get "posts/#{req.params.slug}", (err, post) ->
+    return next() if !post
+    res.redirect 301, "/blog/#{req.params.slug}"
+
+app.get '/:slug/edit', (req, res, next) ->
+  db.get "posts/#{req.params.slug}", (err, post) ->
+    return next() if !post
+    res.redirect 301, "/blog/#{req.params.slug}/edit"
+
+app.get '/blog/:slug', (req, res, next) ->
   renderPost req, res, next
 
-app.get '/:slug/edit', session, restrict, (req, res, next) ->
+app.get '/blog/:slug/edit', session, restrict, (req, res, next) ->
   renderPost req, res, next, model: true
 
 port = process.argv[2] ? 8888
