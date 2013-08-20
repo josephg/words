@@ -15,9 +15,9 @@ marked.setOptions highlight: (code, lang) ->
   catch
     code
 
-OWNER = 'josephg@gmail.com'
+OWNER = 'me@josephg.com'
 
-db = level 'text', valueEncoding: 'json'
+db = level 'db', valueEncoding: 'json'
 
 reindex = (callback) ->
   ws = db.createWriteStream type:'del'
