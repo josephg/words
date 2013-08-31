@@ -207,6 +207,7 @@ renderPost = (req, res, next, opts = {}) ->
   db.get "posts/#{req.params.slug}", (err, post) ->
     return next() if !post
 
+    res.setHeader 'Cache-Control', 'max-age=21600' # 6 hours
     opts.post = post
     opts.model = !!opts.model
     opts.md = marked
@@ -234,6 +235,34 @@ app.get '/blog/:slug', (req, res, next) ->
 
 app.get '/blog/:slug/edit', session, restrict, (req, res, next) ->
   renderPost req, res, next, model: true
+
+app.get '/.well-known/webfinger', (req, res, next) ->
+  resource = req.query.resource
+  return next() if resource not in ['acct:me@josephg.com', 'acct:josephg@gmail.com']
+
+  res.setHeader 'Access-Control-Allow-Origin', '*'
+  res.setHeader 'Content-Type', 'application/jrd+json'
+  res.setHeader 'Cache-Control', 'max-age=21600' # 6 hours
+  res.end JSON.stringify
+    subject: resource
+    aliases: ['https://josephg.com/']
+    links: [
+      {rel:'avatar', type:'image/jpeg', href:'http://www.gravatar.com/avatar/555b9e9ff4c3033dd6d31ba7796d2374?s=200'}
+      {rel:'homepage', type:'text/html', href:'https://josephg.com'}
+      {rel:'blog', type:'text/html', href:'https://josephg.com'}
+      {
+        rel:'public-key'
+        type:'text/plain'
+        href:'http://josephg.com/josephg.key'
+        properties:
+          fingerprint: 'B0A4 EB55 915D 736A FE03  5584 82CD B632 8A02 DEA6'
+          algorithm: 'rsa'
+      }
+    ]
+
+
+
+#?resource=acct:pithy.example@gmail.com
 
 port = process.argv[2] ? 8888
 app.listen port
