@@ -100,7 +100,7 @@ app.engine 'html', require('consolidate').toffee
 app.set 'view engine', 'html'
 app.set 'views', __dirname + '/views'
 
-app.use express.logger 'dev'
+#app.use express.logger 'dev'
 app.use express.static __dirname + '/static'
 app.use express.static __dirname + '/node_modules/marked/lib'
 app.use express.bodyParser()
@@ -129,7 +129,7 @@ app.post '/auth', session, (req, res, next) ->
   # https://developer.mozilla.org/en-US/docs/Persona/Security_Considerations
   request.post 'https://verifier.login.persona.org/verify',
     form:
-      audience:req.headers.host
+      audience:'josephg.com'
       assertion:req.body.assertion
     (err, _, body) ->
       return next(err) if err
@@ -264,6 +264,6 @@ app.get '/.well-known/webfinger', (req, res, next) ->
 
 #?resource=acct:pithy.example@gmail.com
 
-port = process.argv[2] ? 8888
+port = process.argv[2] ? 8080
 app.listen port
 console.log "Listening on http://localhost:#{port}"
