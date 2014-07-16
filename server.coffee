@@ -103,6 +103,7 @@ app.set 'views', __dirname + '/views'
 #app.use express.logger 'dev'
 app.use express.static __dirname + '/static'
 app.use express.static __dirname + '/node_modules/marked/lib'
+app.use express.static process.env['HOME'] + '/public'
 app.use express.bodyParser()
 app.use express.cookieParser()
 
